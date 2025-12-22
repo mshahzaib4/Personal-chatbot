@@ -1,0 +1,114 @@
+Personal Profile for Chatbot Training
+
+Name: Muhammad Shahzaib Yaqoob
+Profession: AI / ML Engineer
+Location: Lahore, Punjab, Pakistan
+
+Professional Identity
+
+Muhammad Shahzaib Yaqoob is an AI/ML Engineer with strong expertise in building machine learning–powered applications, intelligent chatbots, and predictive systems. He works extensively with Python-based AI frameworks and has hands-on experience in healthcare AI, computer vision, natural language processing, and LLM-based systems.
+
+He is a competitive programmer, winner of multiple coding competitions, and an active contributor to Kaggle and online AI learning communities.
+
+Education
+
+Bachelor of Science in Computer Science (BSCS)
+Government College University Faisalabad
+Duration: 2021 – 2025
+
+Key Highlights:
+
+Winner of individual and team-based coding competitions (2024)
+
+Completed multiple AI, ML, and web development projects
+
+Collaborated with peers on AI-driven and full-stack applications
+
+Professional Experience
+
+AI / ML Intern
+Arch Technologies – Islamabad (Remote)
+June 2025 – July 2025
+
+Assisted in building, training, and testing machine learning models
+
+Performed data preprocessing, feature engineering, and model evaluation
+
+Supported real-world ML pipeline development
+
+AI Intern
+AISoftdevs
+August 2025 – September 2025
+
+Conducted exploratory data analysis (EDA) to improve model performance
+
+Assisted in AI model development and dataset preparation
+
+Supported project workflows and documentation
+
+Technical Skills
+
+Programming Languages:
+Python, C, C++
+
+Web & Backend:
+HTML, CSS, Flask, FastAPI, MySQL
+
+Data Science & Visualization:
+Pandas, NumPy, Matplotlib, Seaborn, Plotly, Power BI, Tableau
+
+Machine Learning & AI:
+TensorFlow, PyTorch, Scikit-learn, Pydantic
+LangChain, LangGraph
+Basic MLOps
+
+Databases & Cloud:
+MongoDB, Docker, AWS
+
+Projects
+
+Blood Glucose Prediction (ANN): Neural network model for healthcare forecasting
+
+Crop Disease Detection (CNN): Image-based disease classification system
+
+RAG Chatbot: Built using LangChain and LangGraph with vector databases
+
+Wardrobe Assistant Web App: Personalized clothing recommendation system
+
+AI-Driven Academic Web App: API-based AI assistant for academic use
+
+NLP Sentiment Analysis: Text sentiment classification using XM dataset
+
+Certifications
+
+Introduction to Deep Learning – Coursera
+
+Regression Models – Coursera
+
+DeepLearning.AI Specialization
+
+Virtual Assistant – DigiSkills
+
+Awards & Activities
+
+Winner, Individual Coding Competition – 2024
+
+Winner, Team-Based Coding Competition – 2024
+
+Kaggle contributor and AI community participant
+
+Completed multiple real-world AI and ML projects
+
+Languages
+
+English, Urdu, Punjabi
+
+Online Presence
+
+GitHub: github.com/mshahzaib4
+
+Kaggle: kaggle.com/shahzaibmalik44
+
+LinkedIn: linkedin.com/in/shahzaibyaqoob
+
+Email: Shahzaibmalik0448@gmail.com

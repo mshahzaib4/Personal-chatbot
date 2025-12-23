@@ -2,16 +2,17 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+# Copy everything
+COPY . /app
 
-# Debug: Show contents of requirements.txt
-RUN cat requirements.txt
+# Debug: Show the problematic line
+RUN echo "=== Checking requirements.txt ===" && \
+    cat requirements.txt && \
+    echo "=== End of requirements.txt ==="
 
-# Update pip and install
+# Fix pip and install
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
-
-COPY . .
 
 EXPOSE 5000
 CMD ["python", "app.py"]

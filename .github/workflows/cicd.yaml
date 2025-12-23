@@ -90,13 +90,12 @@ jobs:
             -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             $IMAGE_NAME
 
-            
+
       - name: Verify container is running
         run: |
           sleep 5
           docker ps
           docker logs app --tail 20
-
       - name: Clean up old Docker images
         run: |
           docker image prune -a -f --filter "until=24h"

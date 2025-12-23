@@ -4,11 +4,20 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  ECR_REPOSITORY: ${{ secrets.ECR_REPO }}
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-  Continuous-Integration:
+  build-and-push:
     runs-on: ubuntu-latest
-
+    if: github.event_name == 'push'
+    
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
@@ -24,23 +33,28 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push Docker image to ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPO }}
-          IMAGE_TAG: latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            -t ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG \
+            -t ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest \
+            .
 
-  Continuous-Deployment:
-    needs: Continuous-Integration
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+
+  deploy:
+    needs: build-and-push
     runs-on: self-hosted
-
+    if: github.event_name == 'push'
+    
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -52,19 +66,36 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Stop existing container (if running)
+      - name: Stop and remove existing container
         run: |
           docker stop app || true
           docker rm app || true
 
+      - name: Pull latest Docker image
+        run: |
+          docker pull ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
+
       - name: Run Docker container
+        env:
+          IMAGE_NAME: ${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest
         run: |
           docker run -d \
             --name app \
-            -p 8080:5000 \  # Changed from 8080:8080 to 8080:5000
+            --restart unless-stopped \
+            -p 8080:5000 \
             -e AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY }}" \
             -e AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_KEY }}" \
             -e AWS_DEFAULT_REGION="${{ secrets.AWS_DEFAULT_REGION }}" \
             -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" \
             -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
-            "${{ steps.login-ecr.outputs.registry }}/${{ secrets.ECR_REPO }}:latest"
+            $IMAGE_NAME
+
+      - name: Verify container is running
+        run: |
+          sleep 5
+          docker ps
+          docker logs app --tail 20
+
+      - name: Clean up old Docker images
+        run: |
+          docker image prune -a -f --filter "until=24h"

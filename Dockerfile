@@ -6,17 +6,16 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Copy requirements first (for better caching)
+# Copy requirements first for better Docker layer caching
 COPY requirements.txt .
 
-# FIX: Upgrade pip first to avoid compatibility issues
+# Upgrade pip to fix the compatibility issue, then install dependencies
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
-COPY . /app
+COPY . .
 
-# Note: Your app runs on port 5000 but CICD maps to 8080
 EXPOSE 5000
 
 CMD ["python", "app.py"]

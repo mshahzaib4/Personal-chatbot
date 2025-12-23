@@ -1,0 +1,27 @@
+# Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment and credentials
+.env
+
+# Git files
+.git/
+.gitignore
+
+# Documentation
+README.md
+LICENSE
+*.md
+
+# Notebooks (experiments, prototyping)
+notebook/
+
+# Local scripts or tools not needed in image
+*.sh
+
+# Any other local or temporary files
+*.log
+*.tmp

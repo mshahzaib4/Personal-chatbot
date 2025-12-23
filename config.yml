@@ -1,0 +1,6 @@
+app: 
+  name: my-chatbot 
+  version: 1.0.0 
+settings: 
+  debug: true 
+  language: en 

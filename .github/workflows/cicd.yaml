@@ -90,6 +90,7 @@ jobs:
             -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
             $IMAGE_NAME
 
+            
       - name: Verify container is running
         run: |
           sleep 5
